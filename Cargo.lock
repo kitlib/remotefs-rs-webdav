@@ -903,17 +903,25 @@ dependencies = [
 
 [[package]]
 name = "remotefs-webdav"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
+ "bytes",
+ "bytestring",
  "env_logger",
+ "http 1.0.0",
+ "httpdate",
+ "indexmap",
  "log",
+ "mime",
+ "nonempty",
  "pretty_assertions",
+ "quick-xml",
  "remotefs",
  "rustydav",
  "serial_test",
  "thiserror",
+ "time 0.3.34",
  "uuid",
- "webdav-xml",
 ]
 
 [[package]]
@@ -1473,24 +1481,6 @@ checksum = "9b85cbef8c220a6abc02aefd892dfc0fc23afb1c6a426316ec33253a3877249b"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
-]
-
-[[package]]
-name = "webdav-xml"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f1328bef48f2c5e3efdf5f42dff6734f495879508ab8cc0d041e33550750a4d1"
-dependencies = [
- "bytes",
- "bytestring",
- "http 1.0.0",
- "httpdate",
- "indexmap",
- "mime",
- "nonempty",
- "quick-xml",
- "thiserror",
- "time 0.3.34",
 ]
 
 [[package]]
