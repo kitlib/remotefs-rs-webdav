@@ -27,3 +27,7 @@ jobs:
           args: --no-default-features --features find,with-containers --no-fail-fast
         env:
           RUST_LOG: trace
+      - name: Format
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy -- -Dwarnings
