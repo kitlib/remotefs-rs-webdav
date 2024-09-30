@@ -1,10 +1,17 @@
 # Changelog
 
 - [Changelog](#changelog)
+  - [0.2.0](#020)
   - [0.1.1](#011)
   - [0.1.0](#010)
 
 ---
+
+## 0.2.0
+
+Released on 30/09/2024
+
+- bump `remotefs` to `0.3.0`
 
 ## 0.1.1
 
