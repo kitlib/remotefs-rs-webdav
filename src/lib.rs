@@ -271,16 +271,19 @@ impl RemoteFs for WebDAVFs {
     ) -> RemoteResult<u64> {
         let url = self.url(src, false);
         debug!("Opening file: {}", url);
-        let mut response = self
+        let response = self
             .client
             .get(&url)
             .map_err(|e| RemoteError::new_ex(RemoteErrorType::ProtocolError, e))?;
+
+        let mut response_parser = ResponseParser::from(response);
+        response_parser.status()?;
 
         // write to dest
         let mut buf = vec![0; 1024];
         let mut total_size = 0;
         loop {
-            let n = response
+            let n = response_parser
                 .read(&mut buf)
                 .map_err(|e| RemoteError::new_ex(RemoteErrorType::IoError, e))?;
             total_size += n as u64;

@@ -1,3 +1,5 @@
+use std::io;
+use std::io::Read;
 use std::path::PathBuf;
 
 use remotefs::fs::{FileType, Metadata};
@@ -18,12 +20,13 @@ impl From<Response> for ResponseParser {
 }
 
 impl ResponseParser {
-    pub fn status(self) -> RemoteResult<()> {
+    pub fn status(&self) -> RemoteResult<()> {
         if self.response.status().is_success() {
             Ok(())
         } else {
             match self.response.status().as_u16() {
-                401 | 403 => Err(RemoteError::new(RemoteErrorType::CouldNotOpenFile)),
+                401 => Err(RemoteError::new(RemoteErrorType::AuthenticationFailed)),
+                403 => Err(RemoteError::new(RemoteErrorType::CouldNotOpenFile)),
                 400 | 404 => Err(RemoteError::new(RemoteErrorType::NoSuchFileOrDirectory)),
                 _ => Err(RemoteError::new(RemoteErrorType::ProtocolError)),
             }
@@ -48,6 +51,10 @@ impl ResponseParser {
         );
 
         Self::parse_propfind(bytes)
+    }
+
+    pub fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        self.response.read(buf)
     }
 
     fn parse_propfind(bytes: impl Into<bytes::Bytes>) -> RemoteResult<Vec<File>> {
